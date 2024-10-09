@@ -47,5 +47,18 @@ This guide provides an overview of three common concurrency approaches in Python
 
 ---
 
+
+| Concurrency Model | I/O-bound Tasks                                                                                  | CPU-bound Tasks                                                                                                                                      |
+|-------------------|--------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `asyncio`         | - Provides concurrency but not true parallelism.                                                 | - No true parallelism for CPU-bound tasks.                                                                                                           |
+|                   | - Multiple I/O tasks are handled by switching between them when one task is waiting for I/O.     | - CPU-bound tasks will block the event loop.                                                                                                         |
+|                   | - Ideal for tasks like network calls, file I/O, etc.                                             | - If a task is CPU-intensive, it will prevent other tasks from running.                                                                              |
+| `threading`       | - Provides true parallelism for I/O-bound tasks.                                                 | - No true parallelism due to the GIL.                                                                                                                |
+|                   | - While one thread waits for I/O, other threads can perform tasks.                               | - Multiple CPU-bound threads will not improve performance because the GIL restricts execution to one thread at a time.                                |
+|                   | - Threads can run independently when waiting for network or disk I/O.                            | - The task switches between threads, but no speed-up is gained for CPU-bound tasks.                                                                  |
+
+
+
+
 ### References
 https://superfastpython.com/
