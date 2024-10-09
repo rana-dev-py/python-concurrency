@@ -59,6 +59,15 @@ This guide provides an overview of three common concurrency approaches in Python
 |                   | - Suitable for I/O-bound tasks but less efficient than `asyncio` or `threading` due to process overhead. | - Ideal for CPU-bound tasks, as each process runs in its own memory space and can fully utilize multi-core CPUs.                                      |
 |                   | - Process-based parallelism incurs more overhead compared to threading due to memory duplication. | - Ideal for CPU-heavy computations like image processing, machine learning, or data analysis.                                                        |
 
+# When to use which Concurrency Model
+
+This table provides an overview of which concurrency model is designed for I/O-bound and CPU-bound tasks.
+
+| Concurrency Model  | Designed For                      | I/O-bound Tasks                | CPU-bound Tasks                  |
+|--------------------|-----------------------------------|---------------------------------|----------------------------------|
+| `asyncio`          | I/O-bound operations              | - Highly efficient for managing multiple I/O-bound tasks, such as network calls, file I/O, etc. | - Not suitable for CPU-bound tasks as they block the event loop. |
+| `threading`        | I/O-bound operations with parallelism | - Suitable for I/O-bound tasks when true parallelism is needed. Threads can perform tasks while others wait for I/O. | - Inefficient for CPU-bound tasks due to the Global Interpreter Lock (GIL) restricting parallel execution. |
+| `multiprocessing`  | CPU-bound operations              | - Can handle I/O-bound tasks but has more overhead than `asyncio` or `threading` due to process creation. | - Designed for CPU-bound tasks, allowing parallel execution across multiple CPU cores, bypassing the GIL. |
 
 
 ### References
