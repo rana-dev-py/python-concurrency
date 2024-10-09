@@ -47,7 +47,6 @@ This guide provides an overview of three common concurrency approaches in Python
 
 ---
 
-
 | Concurrency Model | I/O-bound Tasks                                                                                  | CPU-bound Tasks                                                                                                                                      |
 |-------------------|--------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `asyncio`         | - Provides concurrency but not true parallelism.                                                 | - No true parallelism for CPU-bound tasks.                                                                                                           |
@@ -56,7 +55,9 @@ This guide provides an overview of three common concurrency approaches in Python
 | `threading`       | - Provides true parallelism for I/O-bound tasks.                                                 | - No true parallelism due to the GIL.                                                                                                                |
 |                   | - While one thread waits for I/O, other threads can perform tasks.                               | - Multiple CPU-bound threads will not improve performance because the GIL restricts execution to one thread at a time.                                |
 |                   | - Threads can run independently when waiting for network or disk I/O.                            | - The task switches between threads, but no speed-up is gained for CPU-bound tasks.                                                                  |
-
+| `multiprocessing` | - Offers true parallelism since each process has its own memory space and Python interpreter.    | - True parallelism for CPU-bound tasks as it bypasses the GIL, allowing multiple processes to run on separate CPU cores.                             |
+|                   | - Suitable for I/O-bound tasks but less efficient than `asyncio` or `threading` due to process overhead. | - Ideal for CPU-bound tasks, as each process runs in its own memory space and can fully utilize multi-core CPUs.                                      |
+|                   | - Process-based parallelism incurs more overhead compared to threading due to memory duplication. | - Ideal for CPU-heavy computations like image processing, machine learning, or data analysis.                                                        |
 
 
 
